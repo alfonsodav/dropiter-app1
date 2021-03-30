@@ -1,0 +1,92 @@
+$azul: #3B5998;
+$gris: #F8F7F7;
+
+.content {
+  height: 100%;
+  background-image: url("../../../assets/images/asteriod-background.svg");
+  background-color: $gris;
+  background-repeat: repeat-y;
+  background-size: cover;
+  color: $azul;
+  text-align: center;
+  padding-top: 10%;
+  justify-content: center;
+  .avatar {
+    width: auto;
+    border-radius: 50rem;
+    border: #3B5998 3px solid;
+    ion-avatar{
+      color: $azul;
+      margin: 0;
+    }
+    .icon-ship{
+      display: flex;
+      z-index: 2;
+      position: absolute;
+      background-color: white;
+      border: #3B5998 2px solid;
+      border-radius: 1rem;
+      margin: -0.8rem 1rem 0rem 2.3rem;
+      font-size: 20px;
+    }
+  }
+
+
+  ion-avatar {
+    margin: auto;
+  }
+
+  padding-left: 15px;
+  padding-right: 15px;
+
+
+  .list-input {
+    ion-item {
+      color: #3B5998;
+    }
+  }
+
+  .list-item {
+    background-color: transparent;
+    display: flex;
+    margin-left: 5px;
+    padding: 0 !important;
+    border-radius: 5rem;
+    height: auto;
+    ion-img {
+      border-radius: 1rem;
+      margin: auto;
+      height: 3rem;
+      width: 3rem
+    }
+    &.active{
+      border: #62C454 2px solid;
+    }
+  }
+}
+
+.flex-container {
+  padding-top: 0 !important;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.footer-button {
+  //position: relative;
+  text-align: center;
+  width: 80%;
+  //bottom: -2rem;
+  padding-top: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  flex: 0 0 auto;
+  margin: auto;
+}
+
+.dropiter-background {
+  background-color: $azul;
+  color: white;
+  border-radius: 15px;
+}

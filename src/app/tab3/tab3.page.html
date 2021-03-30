@@ -1,0 +1,29 @@
+<ion-content [fullscreen]="true" color="light">
+  <app-header [subtitle]="'2 Notificaciones nuevas'"> </app-header>
+  <ion-refresher slot="fixed" (ionRefresh)="getNotifications()">
+    <ion-refresher-content [close-duration]="'200ms'"></ion-refresher-content>
+  </ion-refresher>
+  <div class="content">
+    <div class="ion-margin">
+      <h2 class="title-dropiter ion-text-end" slot="end">Notificaciones</h2>
+    </div>
+
+    <ion-list class="notifications">
+      <ion-item color="light" *ngFor="let noti of notifications">
+        <ion-icon
+          name="ellipse-sharp"
+          [color]="noti.new == true  ? 'danger': 'light'"
+          slot="start"
+          (click)="chageState(noti)"
+        ></ion-icon>
+        <ion-label class="ion-text-wrap">
+          <ion-text>
+            <h4 class="">{{noti.title}}</h4>
+            <sub>{{noti.date |date: 'fullDate'}}</sub>
+            <p class="ion-text-justify">{{noti.description}}</p>
+          </ion-text>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

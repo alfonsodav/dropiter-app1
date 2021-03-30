@@ -1,0 +1,23 @@
+<ion-card class="ion-no-margin">
+  <ion-card-header class="header">
+    <ion-row>
+      <ion-col size="2" class="ion-margin-vertical">
+        <ion-avatar>
+          <ion-img [src]="user?.photo_Profile.length > 10 ? 'data:image/png;base64,' + user?.photo_Profile
+             : profile"></ion-img>
+        </ion-avatar>
+      </ion-col>
+      <ion-col size="8" class="ion-padding-start ion-margin-vertical">
+        <ion-text>
+          <h2 class="ion-no-margin ion-padding-top" style="padding-top: 5px;">{{user?.firt_Name}} {{ user?.last_Name}}</h2>
+        </ion-text>
+        <sub>{{subtitle}}</sub>
+      </ion-col>
+      <ion-col size="1">
+        <ion-avatar class="ion-margin-vertical">
+          <ion-icon style="font-size: 3rem;" name="planet-outline"></ion-icon>
+        </ion-avatar>
+      </ion-col>
+    </ion-row>
+  </ion-card-header>
+</ion-card>

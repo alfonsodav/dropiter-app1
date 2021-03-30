@@ -1,0 +1,36 @@
+<ion-content fullscreen="true">
+  <ion-header class="header" style="height: 60%"> </ion-header>
+  <ion-card class="login-card ion-no-margin ion-text-center">
+    <ion-card-header class="card-header ion-margin-top">
+      <ion-card-title class="ion-text-center" style="color: #3b5998"
+        ><b>Inicia</b> sesión</ion-card-title
+      >
+    </ion-card-header>
+    <ion-card-content>
+       <!-- <ion-item color="transparent" slot="start">
+        <ion-input
+          [(ngModel)]="email"
+          type="email"
+          placeholder="usa tu correo"
+        ></ion-input>
+        <ion-icon class="ion-margin-vertical" (click)="loginhttp()" name="log-in-outline"></ion-icon>
+      </ion-item>
+       -->
+      <ion-button
+        class="facebook ion-margin-bottom"
+        (click)="getCurrentState()"
+        mode="ios"
+        color="dropiter"
+        [disabled]="!condiciones"
+      >
+        <ion-icon name="logo-facebook"></ion-icon>
+        <span class="ion-margin-start">usa tu cuenta de facebook</span>
+      </ion-button>  
+        <p>Regístrate con tu cuenta de Facebook, es fácil y rápido.</p>
+      <div class="conditions">
+        <ion-checkbox [(ngModel)]="condiciones"></ion-checkbox>
+        <p>Acepto los términos de uso.</p>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

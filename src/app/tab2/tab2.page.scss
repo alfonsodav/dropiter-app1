@@ -1,0 +1,39 @@
+.product{
+  background-color: #F8F7F7;
+  margin-top: 10px;
+  display:flex;
+  justify-content: space-around;
+  flex-direction: column;
+  ion-text{
+    color: #3B5998;
+    p{
+      font-size: 12px;
+    }
+  }
+  ion-badge{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+}
+.list-item {
+  background-color: transparent;
+  display: flex;
+  margin-left: 10px;
+  padding: 0 !important;
+  height: auto;
+  border-radius: 5rem;
+  width: auto !important;
+  ion-img {
+    border-radius: 1rem;
+    margin: auto;
+    height: 2rem;
+    width: 2rem
+  }
+  &.active{
+    border: #62C454 2px solid;
+  }
+}
+.searchbar{
+  border-radius: 15px;
+}

@@ -1,0 +1,53 @@
+.facebook{
+  background-color: #3B5998 !important;
+  color: white;
+  border-radius: 15px;
+}
+.header{
+  background-position: left 0 top 0px !important; 
+  background-image: url("../../../assets/images/splash-login.png");
+  background-size: cover;
+  color: #3B5998;
+  display: block;
+  .title{
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: center;
+    ion-img{
+      width: 80%;
+      margin: auto;
+    }
+    h1{
+      margin-top: 0;
+    }
+  }
+}
+
+.login-card{
+  padding-top: 1.5rem;
+  padding-bottom: 1rem;
+  z-index: 1;
+  // border-radius: 15px;
+  background-color: #F8F7F7;
+  background-image: url('../../../assets/images/login-asteroid.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 40%;
+  color: #3B5998;
+  // box-shadow: .1rem .1rem 1rem 1rem rgba(0, 0, 0, 0.2);
+  .check-item{
+    background: transparent !important;
+  }
+  .card-header{
+    color: #3B5998;
+  }
+  .conditions{
+    display: flex;
+    margin-top: 1rem;
+    justify-content: center;
+    p{
+      margin-left: 1rem;
+      margin-top: auto;
+    }
+  }
+}

@@ -1,0 +1,34 @@
+.product{
+  margin-top: 10px;
+  padding: 10px;
+  ion-text{
+    color: #3B5998;
+    p{
+      font-size: 12px;
+    }
+  }
+  ion-badge{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+}
+h2{
+  color: #3B5998;
+}
+.prices{
+  margin: auto;
+  ion-chip{
+    text-align: center;
+    width: 100%;
+    color: white;
+    border-radius: 5px;
+    margin: auto;
+    justify-content: center;
+    font-weight: bold;
+  }
+  p{
+    margin-left: 4px;
+    font-size: 11px;
+  }
+}

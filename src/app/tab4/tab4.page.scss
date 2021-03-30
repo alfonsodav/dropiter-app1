@@ -1,0 +1,21 @@
+.list-input {
+  padding: 1rem 2rem;
+  ion-item {
+    color: #3B5998;
+  }
+}
+.dropiter{
+  color: #3B5998;
+}
+.end-session{
+  margin-top: auto;
+  text-align: center;
+  width: 100%;
+}
+.flex-container{
+  padding-top: 0 !important;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: flex-end;
+}

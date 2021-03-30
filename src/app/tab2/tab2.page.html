@@ -1,0 +1,170 @@
+<ion-content [fullscreen]="true" color="light">
+  <ion-refresher slot="fixed" (ionRefresh)="getProduct()" [close-duration]="'200ms'">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <app-header [subtitle]="'19 productos agregados'"></app-header>
+  <div>
+    <ion-segment value="catalogo" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="catalogo">
+        <ion-label>Mi catálogo</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="general">
+        <ion-label>Todos</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+    
+    <ng-container *ngIf="catalogo; else general">
+      <div *ngIf="myproduct.length">
+        <ion-item lines="none" class="ion-margin searchbar">
+          <ion-icon name="search" slot="start"></ion-icon>
+          <ion-input #myCatalogo (input)="filterCatalogo(myCatalogo.value)"></ion-input>
+        </ion-item>
+        <ion-list class="product">
+          <ion-item-sliding
+            color="light"
+            class="product"
+            lines="none"
+            *ngFor="let product of myproduct"
+          >
+            <ion-item (click)="modalUpdateProduct(product)">
+              <ion-card
+                style="
+                margin: 0px 5px;
+                min-width: 80px;
+                height: 106px;
+                display: flex;
+              "
+              >
+                <ion-img
+                  style="width: 80px; height: 80px; margin: auto"
+                  [src]="'data:image/jpg;base64,' + product.ProductoData?.img_Portada"
+                ></ion-img>
+              </ion-card>
+              <div>
+                <ion-badge color="success"
+                >L{{product?.precio}}</ion-badge
+                >
+                <ion-text>
+                  <h5 class="ion-no-margin">{{product.ProductoData?.nombre}}</h5>
+                  <sub>{{product.ProductoData?.marca}}</sub>
+                  <p class="ion-no-margin">{{product.ProductoData?.descripcion}}</p>
+                  <p *ngIf="detalles" class="ion-no-margin">
+                    Color: <span>Azul</span> Tamaño: <span>M,L,XL</span>
+                  </p>
+                </ion-text>
+              </div>
+            </ion-item>
+            <ion-item-options side="end">
+              <ion-item-option color="danger" (click)="removeCatalogo(product)">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+                <ion-label>Eliminar</ion-label>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+      </div>
+      <ion-item *ngIf="!myproduct.length" style="text-align: center;" lines="none">
+        <h3 style="text-align: center; width: 100%;">Aun no agredas productos</h3>
+      </ion-item>
+    </ng-container>
+    <ng-template #general>
+      <ion-item lines="none" class="ion-margin searchbar">
+        <ion-icon name="search" slot="start"></ion-icon>
+        <ion-input></ion-input>
+      </ion-item>
+      <div>
+        <h3 class="ion-padding-horizontal" style="color: #3b5998">
+          Filtrar por categorías
+        </h3>
+        <div
+          style="overflow-x: auto; display: flex"
+          class="ion-padding-horizontal"
+        >
+          <ion-avatar
+            class="list-item"
+            *ngFor="let cat of categorias"
+            (click)="selectCategory($event, cat)"
+          >
+            <ion-img [src]="'data:image/jpg;base64,' + cat.img"></ion-img>
+          </ion-avatar>
+        </div>
+      </div>
+      <ion-list class="product" *ngIf="products">
+        <ion-item
+          color="light"
+          class="product"
+          lines="none"
+          *ngFor="let pro of products"
+          (click)="modalProduct(pro)"
+        >
+          <ion-card
+            style="
+              margin: 0px 5px;
+              min-width: 20%;
+              height: 106px;
+              display: flex;
+            "
+          >
+            <ion-img
+              style="width: 80px; height: 80px; margin: auto"
+              [src]="'data:image/jpg;base64,' + pro.img_Portada"
+            ></ion-img>
+          </ion-card>
+          <div>
+            <ion-badge color="success">L{{pro.precio_Descuento}}</ion-badge>
+            <ion-text>
+              <h5 class="ion-no-margin">{{pro.nombre}}</h5>
+              <sub>{{pro.marca}}</sub>
+              <p class="ion-no-margin">{{pro.descripcion}}</p>
+              <p *ngIf="detalles" class="ion-no-margin">
+                Color: <span>Azul</span> Tamaño: <span>M,L,XL</span>
+              </p>
+            </ion-text>
+          </div>
+        </ion-item>
+      </ion-list>
+      <ion-list *ngIf="!products">
+        <ion-item
+          color="light"
+          class="product"
+          lines="none"
+          *ngFor="let product of [1,1,1,1]"
+        >
+          <ion-thumbnail slot="start">
+            <ion-skeleton-text></ion-skeleton-text>
+          </ion-thumbnail>
+          <div style="width: 100%">
+            <ion-text>
+              <h4 class="ion-no-margin">
+                <ion-skeleton-text
+                  style="width: 80%"
+                  animated
+                ></ion-skeleton-text>
+              </h4>
+              <sub>
+                <ion-skeleton-text
+                  style="width: 80%"
+                  animated
+                ></ion-skeleton-text>
+              </sub>
+              <p class="ion-no-margin ion-color-light">
+                <ion-skeleton-text
+                  style="width: 80%"
+                  animated
+                ></ion-skeleton-text>
+              </p>
+            </ion-text>
+          </div>
+        </ion-item>
+      </ion-list>
+    </ng-template>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Loading more data..."
+      >
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+</ion-content>

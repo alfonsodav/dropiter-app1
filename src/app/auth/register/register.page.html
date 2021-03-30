@@ -1,0 +1,155 @@
+<ion-content>
+  <div class="content">
+    <div style="height: 100%" *ngIf="view == 1 || view > 3">
+      <div style="display: flex; justify-content: center">
+        <div class="ion-margin-bottom avatar">
+          <ion-avatar slot="center">
+            <ion-img [src]="profile || 'assets/icon/asteroid.png'"></ion-img>
+          </ion-avatar>
+          <ion-icon name="planet-outline" slot="end" class="icon-ship"></ion-icon>
+        </div>
+      </div>
+
+      <h2 class="ion-no-margin"><strong>Bienvenido</strong></h2>
+      <h2 class="ion-no-margin">{{user?.firt_Name}} {{user?.last_name}}</h2>
+      <h3>¡Gracias por registrarte en <strong>Dropiter!</strong></h3>
+      <ion-text>
+        <p><strong>Somos Dropiter</strong>, una plataforma que te permite vender lo que sea a quien sea</p>
+        <p> Te conectamos con los mejores productos para que armes tu propio catálogo.</p>
+        <p>Solo necesitamos un poco más de información tuya para que puedas iniciar</p>
+      </ion-text>
+
+      <div style="height: 20%" class="flex-container">
+        <div class="footer-button">
+          <ion-button expand="block" class="ion-margin-horizontal dropiter-background" mode="ios"
+                      color="dropiter"
+                      (click)="continue()">Continuar
+          </ion-button>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div style="height: 100%" *ngIf="view == 2">
+      <div style="display: flex; justify-content: center">
+        <div class="ion-margin-bottom avatar">
+          <ion-avatar slot="center">
+            <ion-img [src]="profile || 'assets/icon/asteroid.png'"></ion-img>
+          </ion-avatar>
+        </div>
+        <h2 class="ion-margin">{{user.firt_Name}} {{user.last_name}}</h2>
+      </div>
+
+
+      <ion-text class="ion-padding-top ion-text-end">
+        <h3 class="ion-margin-horizontal">Tus datos</h3>
+        <p class="ion-margin-horizontal">Proporciónanos un un poco más de información para que puedas iniciar.</p>
+      </ion-text>
+      <ion-text>
+
+      </ion-text>
+      <ion-item-group class="list-input">
+        <ion-item color="transparent">
+
+          <ion-label position="floating">
+            <ion-icon name="mail-outline" style="margin-right: 5px;" slot="start"></ion-icon>
+            <span>correo electronico</span>
+          </ion-label>
+          <ion-input required [(ngModel)]="user.email" type="email"></ion-input>
+        </ion-item>
+        <ion-item color="transparent">
+          <ion-label position="floating">
+            <ion-icon name="phone-portrait-outline" style="margin-right: 5px;" slot="start"></ion-icon>
+            <span>99991234</span>
+          </ion-label>
+          <ion-input required [(ngModel)]="user.tefl" pattern="[0-9]+" type="tel"></ion-input>
+        </ion-item>
+        <ion-item color="transparent">
+          <ion-label position="floating" style="display: flex">
+            <ion-img style="width: 1.5rem; margin-right: 5px" src="assets/icon/transaction.png" slot="start"></ion-img>
+            <span>Selecciona tu banco</span>
+          </ion-label>
+          <ion-input (click)="modalBank()"></ion-input>
+        </ion-item>
+        <ion-item color="transparent">
+          <ion-label position="floating" style="display: flex">
+            <ion-icon name="globe-outline" style="margin-right: 5px;" slot="start"></ion-icon>
+            <span>Departamento</span>
+          </ion-label>
+          <ion-select required [(ngModel)]="user.id_Departamento_FK" (ionChange)="getMunicipes()">
+            <ion-select-option *ngFor="let option of departamentos" [value]="option.id_Departamento">
+              {{option.nombre_Departamento}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item color="transparent">
+          <ion-label position="floating" style="display: flex">
+            <ion-icon name="navigate-outline" style="margin-right: 5px;" slot="start"></ion-icon>
+            <span>Municipio</span>
+          </ion-label>
+          <ion-select required [(ngModel)]="user.id_Municipio_FK" [disabled]='!municipios'>
+            <ion-select-option *ngFor="let option of municipios" [value]="option.id_Municipio">
+              {{option.nombre}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item color="transparent">
+          <ion-label position="floating">
+            <ion-icon name="location-outline" style="margin-right: 5px;" slot="start"></ion-icon>
+            <span>¿Dónde estás?</span>
+          </ion-label>
+          <ion-input required [(ngModel)]="user.direction" type="text"></ion-input>
+        </ion-item>
+        <ion-item color="transparent">
+          <ion-label position="floating">
+            <ion-icon name="key-outline" style="margin-right: 5px;" slot="start"></ion-icon>
+            Dale Seguridad a tu perfil
+          </ion-label>
+          <ion-input required [(ngModel)]="user.pass" type="password"></ion-input>
+        </ion-item>
+      </ion-item-group>
+      <div style="height: 15%" class="flex-container">
+        <div class="footer-button">
+          <ion-button [disabled]="completo()" expand="block" class="ion-margin-horizontal dropiter-background" mode="ios"
+                      color="dropiter"
+                      (click)="continue()">Continuar
+          </ion-button>
+        </div>
+      </div>
+    </div>
+
+    <div style="height: 100%" *ngIf="view == 3">
+
+      <div style="display: flex; justify-content: center">
+        <div class="ion-margin-bottom avatar">
+          <ion-avatar slot="center">
+            <ion-img [src]="profile || 'assets/icon/asteroid.png'"></ion-img>
+          </ion-avatar>
+        </div>
+        <h2 class="ion-margin">{{user.firt_Name}} {{user.last_name}}</h2>
+      </div>
+
+      <ion-text class="ion-padding-top ion-text-center">
+        <h3 class="ion-margin-horizontal">¿Qué quieres vender?</h3>
+      </ion-text>
+      <ion-text class="ion-text-end">
+        <p class="ion-margin-horizontal">Selecciona algunas categorías de productos de los que te gustaría vender</p>
+      </ion-text>
+      <div style="display: flex;">
+        <ion-chip class="list-item" *ngFor="let cat of categorias" (click)="selectCategory($event, cat)">
+          <ion-img [src]="'data:image/jpg;base64,' + cat.img"></ion-img>
+        </ion-chip>
+      </div>
+      <div style="height: 30%" class="flex-container">
+        <div class="footer-button">
+          <ion-button expand="block" class="ion-margin-horizontal dropiter-background" mode="ios"
+                      color="dropiter"
+                      (click)="continue(true)">Continuar
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+

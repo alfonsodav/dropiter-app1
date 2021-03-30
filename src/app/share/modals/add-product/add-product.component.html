@@ -1,0 +1,73 @@
+<div
+  class="ion-text-center ion-justify-content-center"
+  style="margin-top: auto; margin-bottom: auto"
+>
+  <h2 style="color: white;">Agregar producto</h2>
+  <ion-card id="my-modal" class="ion-no-margin">
+    <ion-card-content
+      class="product"
+      style="display: flex; justify-content: space-around"
+    >
+      <ion-card
+        style="margin: 0px 5px; min-width: 20%; height: 106px; display: flex"
+      >
+        <ion-img
+          style="width: 80px; height: 80px; margin: auto"
+          [src]="'data:image/jpg;base64,' + product?.img_Portada"
+        ></ion-img>
+      </ion-card>
+      <div>
+        <ion-text class="ion-text-left">
+          <h3 class="ion-no-margin">{{ product?.nombre }}</h3>
+          <p style="font-size: 16px">{{ product?.marca }}</p>
+          <p class="ion-no-margin">{{ product?.descripcion }}</p>
+          <p class="ion-no-margin">
+            Color: <span>Azul</span> Tamaño: <span>M,L,XL</span>
+          </p>
+        </ion-text>
+      </div>
+    </ion-card-content>
+    <ion-row style="display: flex" class="ion-text-left prices">
+      <ion-col size="4" class="ion-margin-start">
+        <ion-chip style="background: #f4be4f"
+          >L{{ product?.precio_Descuento }}</ion-chip
+        >
+        <p class="ion-no-margin">Precio</p>
+      </ion-col>
+      <ion-col size="4" class="ion-margin-start">
+        <ion-item
+          color="transparent"
+          style="
+            background: #3b5998;
+            border-radius: 5px;
+            height: 32px;
+            margin: 0;
+          "
+        >
+          <ion-label style="color: aliceblue; margin-top: -3px">L</ion-label>
+          <ion-input [focus]
+            style="background: #3b5998; color: aliceblue; margin-top: -13px;"
+            [(ngModel)]="precio"
+          ></ion-input>
+        </ion-item>
+        <p class="ion-no-margin">Precio de venta sugerido</p>
+      </ion-col>
+    </ion-row>
+    <div class="ion-margin" style="display: flex">
+      <ion-button
+        style="width: 100%"
+        class="ion-padding-horizontal"
+        (click)="dismiss()"
+        color="danger"
+        >Cancelar
+      </ion-button>
+      <ion-button
+        style="width: 100%"
+        class="ion-padding-horizontal"
+        (click)="addProduct()"
+        color="success"
+        >Continuar
+      </ion-button>
+    </div>
+  </ion-card>
+</div>

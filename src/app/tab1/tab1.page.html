@@ -1,0 +1,112 @@
+<ion-content [fullscreen]="true" class="content">
+  <div class="content">
+    <app-header (user)="user" [subtitle]="'121 productos vendidos'">
+    </app-header>
+
+    <ion-card>
+      <ion-row class="ion-text-center">
+        <ion-col size="4">
+          <ion-img style="width: 1.5rem; margin: auto" src="assets/icon/shipping.png"></ion-img>
+          <p class="ion-no-margin">Este mes</p>
+        </ion-col>
+        <ion-col class="ion-padding-vertical primary" size="4">
+          <ion-text>11 ventas</ion-text>
+        </ion-col>
+        <ion-col size="4" class="dropiter">
+          <ion-text>
+            <h3 class="ion-no-margin">L620.00</h3>
+            <p class="ion-no-margin">comisiones</p>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+    <ion-card>
+      <ion-card-header class="ion-no-padding ion-padding-start">
+        <ion-card-subtitle>
+          L 12K
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content style="padding: 5px">
+        <ion-row>
+          <ion-col>
+            <ion-row class="ion-text-center">
+              <ion-col size="2">
+                <ion-icon name="ellipse" style="color: #3581F2"></ion-icon>
+                <p>ene</p>
+              </ion-col>
+              <ion-col size="2">
+                <ion-icon name="ellipse" style="color: #3581F2"></ion-icon>
+                <p>feb</p>
+              </ion-col>
+              <ion-col size="2">
+                <ion-icon name="ellipse" style="color: #3581F2"></ion-icon>
+                <p>mar</p>
+              </ion-col>
+              <ion-col size="2">
+                <ion-icon name="ellipse" style="color: #3581F2"></ion-icon>
+                <p>abr</p>
+              </ion-col>
+              <ion-col size="2">
+                <ion-icon name="ellipse" style="color: #3581F2"></ion-icon>
+                <p>may</p>
+              </ion-col>
+              <ion-col size="2">
+                <ion-icon name="ellipse" style="color: #3581F2"></ion-icon>
+                <p>jun</p>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+          <ion-col size="2" class="ion-text-center">
+            <ion-img style="width: 2rem; margin: auto" src="assets/icon/shopping.png"></ion-img>
+            <ion-label style="font-size: 20px">2021</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-text>
+          <h2 class="ion-no-margin" style="color: #3581F2">
+            L 76.000,12
+          </h2>
+          <p class="ion-no-margin">Ultimos 6 meses</p>
+        </ion-text>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="ion-text-center">
+      <ion-row class="">
+        <ion-col size="6" class="dropiter">
+            <ion-item lines="none" class="dropiter" color="dropiter" (click)="openCatalogo()">
+              <ion-img style="width: 50px; height: 50px" src="assets/icon/e-learning.png"></ion-img>
+              <label>Mi catálogo</label>
+            </ion-item>
+        </ion-col>
+        <ion-col size="6" style="height: 100%" (click)="shareOption()">
+          <ion-icon name="share-outline" size="large"></ion-icon>
+          <p class="ion-no-margin">Enviar</p>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+    <ion-text style="color: #3B5998; margin-left: 1rem">Tus productos más vendidos</ion-text>
+    <ion-item *ngIf="!myproduct?.length" color="transparent" style="text-align: center;" lines="none">
+      <h3 style="text-align: center; width: 100%;">Aun no agredas productos</h3>
+    </ion-item>
+    <div style="display: flex; overflow-x: auto">
+      <ion-col size="3" style="margin: 0.5rem" *ngFor="let pro of myproduct">
+        <div class="product">
+          <ion-badge class="badge">{{pro.sales || 12}}</ion-badge>
+          <ion-card class="ion-no-margin">
+            <ion-img [src]="'data:image/jpg;base64,' + pro.ProductoData?.img_Portada"></ion-img>
+          </ion-card>
+        </div>
+      </ion-col>
+    </div>
+    <ion-text style="color: #3B5998; margin-left: 1rem">Te pueden interesar estos productos</ion-text>
+    <div style="display: flex; overflow-x: auto">
+      <ion-col size="3" style="margin: 0.5rem" *ngFor="let pro of product" (click)="openModal(pro)">
+        <div class="product">
+          <ion-badge class="badge">{{pro.cantidad_Inventario}}</ion-badge>
+          <ion-card class="ion-no-margin">
+            <ion-img [src]="'data:image/jpg;base64,' + pro.img_Portada"></ion-img>
+          </ion-card>
+        </div>
+      </ion-col>
+    </div>
+  </div>
+</ion-content>
