@@ -9,7 +9,7 @@
       style="display: flex; justify-content: space-around"
     >
       <ion-card
-        style="margin: 0px 5px; min-width: 20%; height: 106px; display: flex"
+        style="margin: 0 5px; min-width: 20%; height: 106px; display: flex"
       >
         <ion-img
           style="width: 80px; height: 80px; margin: auto"
@@ -30,7 +30,7 @@
     <ion-row style="display: flex" class="ion-text-left prices">
       <ion-col size="4" class="ion-margin-start">
         <ion-chip style="background: #f4be4f"
-          >L{{ product?.precio_Descuento }}</ion-chip
+        >L{{ product?.precio_Descuento }}</ion-chip
         >
         <p class="ion-no-margin">Precio</p>
       </ion-col>
@@ -45,9 +45,8 @@
           "
         >
           <ion-label style="color: aliceblue; margin-top: -3px">L</ion-label>
-          <ion-input [focus]
-            style="background: #3b5998; color: aliceblue; margin-top: -13px;"
-            [(ngModel)]="precio"
+          <ion-input style="background: #3b5998; color: aliceblue; margin-top: -13px;"
+                     [(ngModel)]="precio"
           ></ion-input>
         </ion-item>
         <p class="ion-no-margin">Precio de venta sugerido</p>
@@ -59,14 +58,14 @@
         class="ion-padding-horizontal"
         (click)="dismiss()"
         color="danger"
-        >Cancelar
+      >Cancelar
       </ion-button>
       <ion-button
         style="width: 100%"
         class="ion-padding-horizontal"
         (click)="addProduct()"
         color="success"
-        >Continuar
+      >Continuar
       </ion-button>
     </div>
   </ion-card>

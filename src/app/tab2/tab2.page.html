@@ -1,8 +1,8 @@
 <ion-content [fullscreen]="true" color="light">
-  <ion-refresher slot="fixed" (ionRefresh)="getProduct()" [close-duration]="'200ms'">
+  <ion-refresher slot="fixed" closeDuration="200ms">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <app-header [subtitle]="'19 productos agregados'"></app-header>
+  <app-header [subtitle]="myproduct.length + ' productos agregados'"></app-header>
   <div>
     <ion-segment value="catalogo" (ionChange)="segmentChanged($event)">
       <ion-segment-button value="catalogo">
@@ -12,24 +12,23 @@
         <ion-label>Todos</ion-label>
       </ion-segment-button>
     </ion-segment>
-    
+
     <ng-container *ngIf="catalogo; else general">
-      <div *ngIf="myproduct.length">
+      <div *ngIf="productService.Catalogo">
         <ion-item lines="none" class="ion-margin searchbar">
           <ion-icon name="search" slot="start"></ion-icon>
           <ion-input #myCatalogo (input)="filterCatalogo(myCatalogo.value)"></ion-input>
         </ion-item>
         <ion-list class="product">
           <ion-item-sliding
-            color="light"
             class="product"
             lines="none"
-            *ngFor="let product of myproduct"
+            *ngFor="let product of productService.Catalogo"
           >
-            <ion-item (click)="modalUpdateProduct(product)">
+            <ion-item color="light" (click)="modalUpdateProduct(product)">
               <ion-card
                 style="
-                margin: 0px 5px;
+                margin: 0 5px;
                 min-width: 80px;
                 height: 106px;
                 display: flex;
@@ -99,7 +98,7 @@
         >
           <ion-card
             style="
-              margin: 0px 5px;
+              margin: 0 5px;
               min-width: 20%;
               height: 106px;
               display: flex;

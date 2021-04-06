@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { SocialShareService } from '../services/social-share.service';
-import { Notifications } from '../models/user'
+import { Notifications } from '../models/user';
 
 @Component({
   selector: 'app-tab3',
@@ -15,7 +15,7 @@ export class Tab3Page {
   constructor(private share: SocialShareService, private auth: AuthService) {
     this.getNotifications();
     this.auth.getUser().then(data => {
-      console.log(data)
+      console.log(data);
       this.user = data;
     });
     console.log(this.timeMilliseconds < new Date().getTime());
@@ -23,15 +23,11 @@ export class Tab3Page {
     console.log(new Date().getTime());
   }
   difNotifications(data: [Notifications]) {
-    localStorage.setItem('date', (new Date).toString());
+    localStorage.setItem('date', (new Date()).toString());
     const notifications = [];
     data.forEach(noti => {
       console.log(noti.date);
-      if (new Date(noti.date).getTime() < this.timeMilliseconds) {
-        noti.new = false;
-      } else {
-        noti.new = true;
-      }
+      noti.new = new Date(noti.date).getTime() >= this.timeMilliseconds;
       notifications.push(noti);
     });
     return notifications;
@@ -44,8 +40,8 @@ export class Tab3Page {
       console.log(data.data);
     }).catch(err => {
       console.log(err);
-      console.log(JSON.stringify(err))
-    })
+      console.log(JSON.stringify(err));
+    });
   }
   chageState(noti) {
     noti.new = false;

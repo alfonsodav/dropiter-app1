@@ -2,26 +2,56 @@
   <ion-card-header class="ion-text-center">
     <ion-card-title>Selecciona tu banco</ion-card-title>
   </ion-card-header>
-  <ion-card-content>
+  <ion-card-content *ngIf="!Id">
     <ion-item>
       <ion-label position="floating">Selecciona el banco</ion-label>
-      <ion-input [(ngModel)]="bank.name" type="text"></ion-input>
+      <ion-select required [(ngModel)]="bank.id_Banco_FK" type="text">
+        <ion-select-option *ngFor="let bank of listBank" [value]="bank.id_Banco">{{bank.nombre_Banco}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Tipo de cuenta</ion-label>
+      <ion-select required [(ngModel)]="bank.id_Tipo_Cuenta_FK">
+        <ion-select-option *ngFor="let type of typeBank" [value]="type.id_Tipo_Cuenta_Banco">{{type.tipo}}</ion-select-option>
+      </ion-select>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Número de cuenta</ion-label>
-      <ion-input [(ngModel)]="bank.number"  type="text"></ion-input>
+      <ion-input required [(ngModel)]="bank.numero_Cuenta"  type="text"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Tu número de identidad</ion-label>
-      <ion-input [(ngModel)]="bank.numberId"  type="text"></ion-input>
+      <ion-input [(ngModel)]="bank.identidad"  type="text"></ion-input>
     </ion-item>
-    <ion-item lines="none">
-      <ion-label>Cuenta de Ahorros</ion-label>
-      <ion-toggle [(ngModel)]="bank.ahorro"></ion-toggle>
-    </ion-item>
+    <div class="ion-margin">
+      <ion-button expand="block" class="ion-padding-horizontal" (click)="dismiss()" color="success">Continuar</ion-button>
+    </div>
   </ion-card-content>
-  <div class="ion-margin">
-    <ion-button expand="block" class="ion-padding-horizontal" (click)="dismiss()" color="success">Continuar</ion-button>
-  </div>
+  <!-- Update -->
+  <ion-card-content *ngIf="Id">
+    <ion-item>
+      <ion-label position="floating">Selecciona el banco</ion-label>
+      <ion-select required [(ngModel)]="dataBank.id_Banco_FK" type="text">
+        <ion-select-option *ngFor="let bank of listBank" [value]="bank.id_Banco">{{bank.nombre_Banco}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Tipo de cuenta</ion-label>
+      <ion-select required [(ngModel)]="bank.id_Tipo_Cuenta_FK">
+        <ion-select-option *ngFor="let type of typeBank" [value]="type.id_Tipo_Cuenta_Banco">{{type.tipo}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Número de cuenta</ion-label>
+      <ion-input required [(ngModel)]="dataBank.numero_Cuenta"  type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Tu número de identidad</ion-label>
+      <ion-input [(ngModel)]="dataBank.identidad"  type="text"></ion-input>
+    </ion-item>
+    <div class="ion-margin">
+      <ion-button expand="block" class="ion-padding-horizontal" (click)="updateData()" color="success">Actualizar</ion-button>
+    </div>
+  </ion-card-content>
 </ion-card>
 

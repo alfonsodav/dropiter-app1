@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import { Plugins, CameraResultType } from '@capacitor/core';
-import { error } from 'protractor';
 import { LocateService } from '../services/locate.service';
 import { User } from '../models/user';
 import { ModalController } from '@ionic/angular';
 import { BankComponent } from '../share/modals/bank/bank.component';
-const { Camera } = Plugins
 
 @Component({
   selector: 'app-tab4',
@@ -20,12 +17,12 @@ export class Tab4Page implements OnInit {
     id_Dropinauta: 0,
     firt_Name: '',
     last_Name: '',
-    tefl: '',
+    phone: '',
     photo_Profile: '',
     email: '',
     direction: '',
-    id_Departamento_FK: 0,
-    id_Municipio_FK: 0,
+    id_Departamento_FK: 2,
+    id_Municipio_FK: 10,
     pass: '123123',
     codigo_Catalogo: '',
     DepartamentoData: [],
@@ -33,9 +30,10 @@ export class Tab4Page implements OnInit {
   };
   municipios;
   departamentos;
+  bank;
 
-  constructor(private auth: AuthService, private router: Router, private locale: LocateService, 
-    private modalIo: ModalController) {
+  constructor(private auth: AuthService, private router: Router, private locale: LocateService,
+              private modalIo: ModalController) {
     this.getDepartament();
   }
 
@@ -61,7 +59,8 @@ export class Tab4Page implements OnInit {
   }
 
   saveChanges() {
-    this.auth.updateUser(this.user);
+    const {photo_Profile,...body} = this.user
+    this.auth.updateUser(body);
   }
 
   endSession() {
@@ -72,22 +71,11 @@ export class Tab4Page implements OnInit {
     this.auth.deleteSession();
     this.router.navigate(['/']).catch(err => console.log(err));
   }
-  async lector(event) {
-
-    let file = event.files[0];
-    var reader = new FileReader();
-    reader.onloadend = () => {
-      const separate = String(reader.result).split(new RegExp(','));
-      this.user.photo_Profile = separate[1]
-      console.log(this.user.photo_Profile);
-    }
-    reader.readAsDataURL(file);
-    console.log(this.user.photo_Profile);
-  }
   async modalBank() {
     const myModal = await this.modalIo.create({
       component: BankComponent,
       backdropDismiss: true,
+      componentProps: {Id: this.user.id_Dropinauta},
       mode: 'ios',
       showBackdrop: true,
       cssClass: 'my-custom-modal',
@@ -96,33 +84,17 @@ export class Tab4Page implements OnInit {
 
     await myModal.present();
     const { data } = await myModal.onWillDismiss();
-    // this.userTest.bank = data;
-    console.log(this.user);
+    this.bank = data;
+    console.log(this.bank);
   }
-  imageProfile() {
-    const options = {
-      quality: 90,
-      allowEditing: false,
-      resultType: CameraResultType.Base64,
-      saveToGallery: true
-    };
-    console.log('subir imagen');
-    Camera.getPhoto(options).then(data => {
-      console.log(data);
-      // this.user.photo_Profile = data.base64String;
-    }).catch(err => {
-      console.log('error foto:', JSON.stringify(err))
-    })
+  async imageProfile() {
+    this.user.photo_Profile = await this.auth.addNewToGallery();
+    console.log(this.user.photo_Profile);
   }
   completo() {
-    const localUser = this.user
-    let invalido = true;
-    if (localUser.id_Municipio_FK && localUser.id_Departamento_FK && localUser.direction && localUser.email && localUser.pass
-      && localUser.tefl) {
-      invalido = false
-    } else {
-      invalido = true
-    }
+    const localUser = this.user;
+    let invalido: boolean;
+    invalido = !(localUser.id_Municipio_FK && localUser.id_Departamento_FK && localUser.direction && localUser.email);
     return invalido;
   }
 

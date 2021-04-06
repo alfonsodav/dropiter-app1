@@ -2,9 +2,9 @@ export interface User {
   id_Dropinauta: number;
   firt_Name: string;
   last_Name: string;
-  tefl: string;
+  phone: string;
   email: string;
-  photo_Profile: string;
+  photo_Profile: any;
   id_Departamento_FK: number;
   id_Municipio_FK: number;
   DepartamentoData: [];

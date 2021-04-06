@@ -13,12 +13,13 @@ import { UpdateProductComponent } from '../share/modals/update-product/update-pr
 export class Tab2Page {
   products;
   dataProducts;
-  myproduct = [];
+  myproduct = this.productService.Catalogo;
   categorias;
   catalogo = true;
   catSelect = [];
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+  detalles: any;
 
   constructor(private modalIo: ModalController, private productService: ProductService, private alertIo: AlertController) {
     this.getProduct();
@@ -53,11 +54,11 @@ export class Tab2Page {
     });
   }
   async getProduct() {
-    this.myproduct = await this.productService.getMyCatalogo() || [];
-    console.log(this.myproduct);
+    await this.productService.getMyCatalogo();
+    console.log(JSON.stringify(this.myproduct));
     const listIdMyproduct = this.myproduct.map(product => product.ProductoData.id_Producto_Negocio);
-    await this.productService.getProductAll().then(data => {
-      const process = data.reduce((acc = [], pro) => {
+    await this.productService.getProductAll().then(() => {
+      const process = this.productService.Product.reduce((acc = [], pro) => {
         if (!listIdMyproduct.includes(pro.id_Producto_Negocio)) {
           acc.push(pro);
         }
@@ -93,6 +94,7 @@ export class Tab2Page {
     this.productService.removeCatalogo(product.id_Producto_Catalogo_Dropinauta).subscribe(() => {
       this.getProduct();
     },  async err => {
+      console.log(err);
       const myalert = await this.alertIo.create(
         {message: 'No pudimos eliminar el producto, comprueba tu conexión',
           backdropDismiss: true,
@@ -128,7 +130,10 @@ export class Tab2Page {
     });
     await myModal.present();
 
-    await myModal.onDidDismiss().then(data => console.log(data));
+    await myModal.onDidDismiss().then(data => {
+      console.log(data);
+      this.getProduct();
+    });
   }
   async modalUpdateProduct(product) {
     console.log(product);
@@ -142,11 +147,14 @@ export class Tab2Page {
     });
     await myModal.present();
 
-    await myModal.onDidDismiss().then(data => console.log(data));
+    await myModal.onDidDismiss().then(data => {
+      console.log(data);
+      this.getProduct();
+    });
   }
   filterCatalogo(value: string){
     value = value ? value.trim().toLowerCase() : '';
-    this.myproduct = this.myproduct.filter(pro => {
+    this.myproduct = this.productService.Catalogo.filter(pro => {
       return pro.ProductoData.nombre.toLowerCase().includes(value) || pro.ProductoData.marca.toLowerCase().includes(value);
     });
   }

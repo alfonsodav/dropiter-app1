@@ -1,75 +1,116 @@
-<ion-content style="background-color: #F8F7F7;">
-  <app-header [subtitle]="user?.email">
-  </app-header>
+<ion-content style="background-color: #f8f7f7">
+  <app-header [subtitle]="user?.email"> </app-header>
   <div class="ion-text-center">
     <h3 class="dropiter">Actualiza tu información</h3>
     <ion-item-group class="list-input">
       <ion-item color="transparent">
-
         <ion-label position="floating">
-          <ion-icon name="mail-outline"  style="margin-right: 5px;" slot="start"></ion-icon>
+          <ion-icon
+            name="mail-outline"
+            style="margin-right: 5px"
+            slot="start"
+          ></ion-icon>
           <span>Correo electronico</span>
         </ion-label>
         <ion-input required [(ngModel)]="user.email" type="email"></ion-input>
       </ion-item>
       <ion-item color="transparent">
         <ion-label position="floating">
-          <ion-icon name="phone-portrait-outline"  style="margin-right: 5px;" slot="start"></ion-icon>
+          <ion-icon
+            name="phone-portrait-outline"
+            style="margin-right: 5px"
+            slot="start"
+          ></ion-icon>
           <span>Telefono</span>
         </ion-label>
-        <ion-input required [(ngModel)]="user.tefl" type="tel"></ion-input>
+        <ion-input required [(ngModel)]="user.phone" type="tel"></ion-input>
       </ion-item>
       <ion-item color="transparent">
         <ion-label position="floating" style="display: flex">
-          <ion-img style="width: 1.5rem; margin-right: 5px" src="assets/icon/transaction.png" slot="start"></ion-img>
+          <ion-img
+            style="width: 1.5rem; margin-right: 5px"
+            src="assets/icon/transaction.png"
+            slot="start"
+          ></ion-img>
           <span>Comprueba tu datos bancarios</span>
         </ion-label>
         <ion-input (click)="modalBank()"></ion-input>
       </ion-item>
       <ion-item color="transparent">
         <ion-label position="floating" style="display: flex">
-          <ion-icon name="globe-outline" style="margin-right: 5px;" slot="start"></ion-icon>
+          <ion-icon
+            name="globe-outline"
+            style="margin-right: 5px"
+            slot="start"
+          ></ion-icon>
           <span>Departamento</span>
         </ion-label>
-        <ion-select required [(ngModel)]="user.id_Departamento_FK" (ionChange)="getMunicipes()">
-          <ion-select-option *ngFor="let option of departamentos" [value]="option.id_Departamento">
+        <ion-select
+          required 
+          [(ngModel)]="user.id_Departamento_FK"
+          (ionChange)="getMunicipes()"
+        >
+          <ion-select-option
+            *ngFor="let option of departamentos"
+            [value]="option.id_Departamento"
+          >
             {{option.nombre_Departamento}}
           </ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item color="transparent">
         <ion-label position="floating" style="display: flex">
-          <ion-icon name="navigate-outline" style="margin-right: 5px;" slot="start"></ion-icon>
+          <ion-icon
+            name="navigate-outline"
+            style="margin-right: 5px"
+            slot="start"
+          ></ion-icon>
           <span>Municipio</span>
         </ion-label>
-        <ion-select required [(ngModel)]="user.id_Municipio_FK" [disabled]='!municipios'>
-          <ion-select-option *ngFor="let option of municipios" [value]="option.id_Municipio">
+        <ion-select
+          required
+          [(ngModel)]="user.id_Municipio_FK"
+        >
+          <ion-select-option
+            *ngFor="let option of municipios"
+            [value]="option.id_Municipio"
+          >
             {{option.nombre}}
           </ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item color="transparent">
         <ion-label position="floating">
-          <ion-icon name="location-outline"  style="margin-right: 5px;" slot="start"></ion-icon>
+          <ion-icon
+            name="location-outline"
+            style="margin-right: 5px"
+            slot="start"
+          ></ion-icon>
           <span>¿Dónde estás?</span>
         </ion-label>
-        <ion-input required [(ngModel)]="user.direction" ></ion-input>
+        <ion-input required [(ngModel)]="user.direction"></ion-input>
       </ion-item>
-     <!--  <ion-item>
-        <ion-label position="floating">
-          <span>Actualiza tu foto de perfil</span>
-        </ion-label>
-        <ion-input type="file"></ion-input>
+      <!-- <ion-item>
+          <ion-img [src]="'data:image/png;base64,' + this.user.photo_Profile"></ion-img>
+        <ion-button (click)="imageProfile()">
+          Actualiza tu foto de perfil
+        </ion-button>
       </ion-item> -->
     </ion-item-group>
     <div class="ion-padding-horizontal ion-margin-bottom">
-      <ion-button [disabled]="completo()" expand="block" class="ion-padding-horizontal" color="success" (click)="saveChanges()">Guardar</ion-button>
+      <ion-button
+        [disabled]="completo()"
+        expand="block"
+        class="ion-padding-horizontal"
+        color="success"
+        (click)="saveChanges()"
+        >Guardar</ion-button
+      >
     </div>
-
   </div>
-
 </ion-content>
 <ion-footer translucent="true" class="ion-text-center">
-  <ion-button color="danger" size="small" fill="clear" (click)="endSession()">Cerrar sesión</ion-button>
+  <ion-button color="danger" size="small" fill="clear" (click)="endSession()"
+    >Cerrar sesión</ion-button
+  >
 </ion-footer>
-

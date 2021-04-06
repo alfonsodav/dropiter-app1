@@ -1,6 +1,6 @@
 <ion-content [fullscreen]="true" class="content">
   <div class="content">
-    <app-header (user)="user" [subtitle]="'121 productos vendidos'">
+    <app-header [subtitle]="'121 productos vendidos'">
     </app-header>
 
     <ion-card>
@@ -84,11 +84,11 @@
       </ion-row>
     </ion-card>
     <ion-text style="color: #3B5998; margin-left: 1rem">Tus productos más vendidos</ion-text>
-    <ion-item *ngIf="!myproduct?.length" color="transparent" style="text-align: center;" lines="none">
+    <ion-item *ngIf="!myProduct?.length" color="transparent" style="text-align: center;" lines="none">
       <h3 style="text-align: center; width: 100%;">Aun no agredas productos</h3>
     </ion-item>
     <div style="display: flex; overflow-x: auto">
-      <ion-col size="3" style="margin: 0.5rem" *ngFor="let pro of myproduct">
+      <ion-col size="3" style="margin: 0.5rem" *ngFor="let pro of productService.Catalogo">
         <div class="product">
           <ion-badge class="badge">{{pro.sales || 12}}</ion-badge>
           <ion-card class="ion-no-margin">

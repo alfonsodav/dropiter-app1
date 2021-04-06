@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, IonRouterOutlet } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { LocateService } from '../../services/locate.service';
 import { BankComponent } from '../../share/modals/bank/bank.component';
 import { AuthService } from '../../services/auth.service';
 import { CategoriasService } from 'src/app/services/categorias.service';
-import {Category, Product} from 'src/app/models/product';
+import {Category} from 'src/app/models/product';
 /*Capacitor*/
 import { Plugins } from '@capacitor/core';
+import { Buffer } from 'buffer';
 const { Storage } = Plugins;
 
 @Component({
@@ -15,16 +16,15 @@ const { Storage } = Plugins;
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage implements OnInit {
-  options = ['Central', 'Provincial', 'Ahorro'];
   view = 1;
   user = {
     firt_Name: '',
     last_Name: '',
-    photo_Profile: '',
+    photo_Profile_B64: "",
     email: '',
     direction: '',
     pass: '',
-    tefl: '',
+    phone: '',
     id_Departamento_FK: 0,
     id_Municipio_FK: 0
   };
@@ -33,6 +33,7 @@ export class RegisterPage implements OnInit {
   catSelect = [];
   municipios;
   departamentos;
+  bank;
 
   constructor(
     private locale: LocateService,
@@ -42,11 +43,6 @@ export class RegisterPage implements OnInit {
   }
 
   ngOnInit() {
-    // this.auth.user$.subscribe(data => console.log(data));
-    // this.auth.getUser().then(data => {
-    //   console.log('register data login:', data);
-    //   this.user = data;
-    // });
     this.getUserInfo();
     this.getCategory();
     this.auth.toastCreate('Perfil aceptado, completa tu registro');
@@ -61,8 +57,6 @@ export class RegisterPage implements OnInit {
       this.user.firt_Name = data.first_name;
       this.user.last_Name = data.last_name;
       this.user.email = data.email;
-      // this.user.photo_Profile =
-      this.profile = data.picture.data.url;
       console.log(JSON.stringify(this.user));
     })
       .catch(err => console.log('error:', JSON.stringify(err)));
@@ -95,6 +89,12 @@ export class RegisterPage implements OnInit {
       await this.cat.addCategoryToUser(select);
     }
   }
+  registerDataBank(id){
+    console.log(id)
+    this.bank.id_Dropinauta_FK = id;
+    console.log(this.bank);
+    this.locale.saveDataBank(this.bank).then(data => console.log(data));
+  }
   getDepartament() {
     this.locale.getDepartament().subscribe(data => this.departamentos = data, err => console.log(err));
   }
@@ -103,18 +103,18 @@ export class RegisterPage implements OnInit {
     const id = this.user.id_Departamento_FK;
     this.locale.getMunicipes(id).subscribe(data => this.municipios = data, err => console.log(err));
   }
+  async imageProfile() {
+    this.user.photo_Profile_B64 = await this.auth.addNewToGallery();
+    this.profile = 'data:image/png;base64,' + this.user.photo_Profile_B64;
+    console.log(this.user.photo_Profile_B64);
+  }
   completo() {
     const localUser = this.user;
-    let invalido = true;
-    if (localUser.id_Municipio_FK && localUser.email && localUser.pass && localUser.id_Departamento_FK && localUser.direction
-      && localUser.tefl) {
-        invalido = false;
-    } else {
-      invalido =  true;
-    }
+    let invalido: boolean;
+    invalido = !(localUser.id_Municipio_FK && localUser.email && localUser.pass && localUser.id_Departamento_FK && localUser.direction
+      && localUser.phone);
     return invalido;
   }
-
 
   async modalBank() {
     const myModal = await this.modalIo.create({
@@ -128,30 +128,34 @@ export class RegisterPage implements OnInit {
 
     await myModal.present();
     const { data } = await myModal.onWillDismiss();
-    // this.userTest.bank = data;
-    console.log(this.user);
+    this.bank = data;
+    console.log(this.bank);
   }
 
   async continue(action?: boolean) {
     this.view++;
     console.log(this.view);
     console.log(action);
-
+    console.log(JSON.stringify(this.bank));
     if (action) {
-      console.log(this.user);
-      this.auth.registerUser(this.user).subscribe(data => {
-        Storage.set({ key: 'user', value: JSON.stringify(data) });
-        Storage.set({ key: 'backup', value: JSON.stringify(data) });
+      console.log(this.bank);
+      try{
+      console.log(JSON.stringify(this.user));
+      const data = await this.auth.registerUser(this.user);
+      if (data.id_Dropinauta && data.id_Dropinauta === 0) {
+        throw new Error('Datos requeridos incompletos')
+      } else {
         console.log(JSON.stringify(data));
-        const user = data;
-        this.auth.syncToDropiter();
-        this.addCategory(user.id_Dropinauta);
-        this.auth.toastCreate('Registro Completo');
+        await this.auth.syncToDropiter();
+        await this.registerDataBank(data.id_Dropinauta);
+        await this.addCategory(data.id_Dropinauta);
+        await this.auth.toastCreate('Registro Completo');
         this.auth.router.navigate(['/dashboard']);
-      }, err => {
-        alert(JSON.stringify(err));
+      } 
+      } catch( err)  {
+        this.auth.toastCreate(JSON.stringify(err));
         this.view = 1;
-      });
+      };
     }
   }
 }

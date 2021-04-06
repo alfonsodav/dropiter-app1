@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true" color="light">
   <app-header [subtitle]="'2 Notificaciones nuevas'"> </app-header>
-  <ion-refresher slot="fixed" (ionRefresh)="getNotifications()">
-    <ion-refresher-content [close-duration]="'200ms'"></ion-refresher-content>
+  <ion-refresher slot="fixed" [closeDuration]="'200ms'" (ionRefresh)="getNotifications()">
+    <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <div class="content">
     <div class="ion-margin">

@@ -15,7 +15,7 @@ export class AddProductComponent implements OnInit {
   user: User;
   precio: number;
   constructor(private modalIo: ModalController, private toastIo: ToastController,
-    private productService: ProductService, private auth: AuthService) { }
+              private productService: ProductService, private auth: AuthService) { }
 
   ngOnInit() {
     console.log('modal product', JSON.stringify(this.product));
@@ -27,11 +27,11 @@ export class AddProductComponent implements OnInit {
       id_Dropinauta_FK: this.user.id_Dropinauta,
       id_Producto_FK: this.product.id_Producto_Negocio,
       precio: Number(this.precio)
-    }
-    const toCategory = {
-      "id_Dropinauta_FK": this.user.id_Dropinauta,
-      "id_Admin_Categoria_Producto_FK": this.product.id_Categoria_Producto_FK
-    }
+    };
+    /*const toCategory = {
+      id_Dropinauta_FK: this.user.id_Dropinauta,
+      id_Admin_Categoria_Producto_FK: this.product.id_Categoria_Producto_FK
+    };*/
     this.productService.addToCatalogo(body).then(data => {
       console.log(data.data);
       alert('Producto agregado al catalogo');
@@ -40,7 +40,7 @@ export class AddProductComponent implements OnInit {
       alert('Ocurrio un error al intentar agregar el producto');
     }).finally(() => this.dismiss());
   }
-  
+
 
   dismiss() {
     this.modalIo.dismiss();

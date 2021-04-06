@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
     email: '',
     direction: '',
     pass: '',
-    tefl: '',
+    phone: '',
     codigo_Catalogo: '',
     id_Departamento_FK: 0,
     id_Municipio_FK: 0,
@@ -28,7 +28,6 @@ export class HeaderComponent implements OnInit {
     MunicipioData: []
   };
   profile;
-  @Output() salida: EventEmitter<any> = new EventEmitter();
 
   constructor(private auth: AuthService) {
   }
@@ -36,10 +35,9 @@ export class HeaderComponent implements OnInit {
   @Input() subtitle;
 
   ngOnInit() {
-    this.getUserInfo();
+    //this.getUserInfo();
     this.auth.user$.subscribe(data => {
       this.user = data;
-      this.salida.emit(data);
     });
     console.log(this.user);
   }
